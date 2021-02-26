@@ -1,0 +1,6 @@
+- hosts: ansiblehost
+  become: yes
+  roles:
+    - 1-create-powerdns-and-PNE-role
+    - 2-configure-powerdns-role
+    - 3-docker-prometheus-grafana-config

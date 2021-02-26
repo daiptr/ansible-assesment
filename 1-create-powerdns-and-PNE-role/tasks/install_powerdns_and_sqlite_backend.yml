@@ -1,0 +1,52 @@
+- name: install EPEL repository to get pdns server
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    state: latest
+
+- name: Install latest version of PowerDNS
+  yum:
+    name: pdns
+    state: latest
+
+- name: expose API, setting DB path
+  blockinfile:
+    path: /etc/pdns/pdns.conf
+    block: |
+      api=yes
+      api-key=changeme
+      gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
+
+- name: Install and configure sqlite as a backend
+  yum:
+    name: pdns-backend-sqlite
+    state: latest
+
+- name: setting the default backend as sqlite3
+  ansible.builtin.lineinfile:
+      path: /etc/pdns/pdns.conf
+      regexp: '^launch='
+      line: 'launch=gsqlite3'
+
+- name: cretaing DB path
+  ansible.builtin.file:
+    dest: /var/lib/powerdns
+    state: directory
+    recurse: yes
+    owner: pdns
+    group: pdns
+    mode: '0755'
+
+- name: creating the database and restarting powerdns
+  #shell: sqlite3 /var/lib/powerdns/pdns.sqlite3 < /usr/share/doc/pdns/schema.sqlite3.sql
+  shell: ls #sita reikia istrinti ir atkomentinti virsutine eilute, nes kitaip gaunu exceptiona is sqlite3 runinant playbuka pakartotinai
+  notify: restart powerdns
+
+
+
+
+
+
+#- name: install Prometheus Node Exporter
+#  command:
+
+

@@ -1,2 +1,7 @@
 ---
 # handlers file for 1-create-powerdns-and-PNE-role
+
+- name: restart powerdns
+  service:
+    name: pdns
+    state: restarted
