@@ -1,0 +1,19 @@
+- name: getting docker-py
+  pip:
+    name: docker-py
+    state: latest
+
+- name: copy prometheus config file to ansiblehost
+  copy:
+    src: files/prometheus.yml
+    dest: /tmp
+
+- name: run prometheus image
+  docker_container:
+    name: prometheus
+    image: "{{ prometheus_image }}"
+    published_ports:
+      - "{{ prometheus_published_port }}"
+    volumes:
+      - /tmp/prometheus.yml:{{ prometheus_workig_path }}/prometheus.yml
+

@@ -1,0 +1,23 @@
+# # config file version
+apiVersion: 1
+
+providers:
+ - name: 'node exporter'
+   orgId: 1
+   folder: ''
+   #folderUid: ''
+   type: file
+   options:
+     path: "{{ grafana_dashboard_path }}/node-exporter-full_rev22.json"
+
+# - name: 'powerdns'
+#   orgId: 2
+#   folder: ''
+#   #folderUid: ''
+#   type: file
+#   options:
+#     path: "{{ grafana_dashboard_path }}/pdns-recursor-stats_rev3.json"
+
+
+
+

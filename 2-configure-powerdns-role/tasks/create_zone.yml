@@ -1,0 +1,8 @@
+- name: copy .sh config file to remote host
+  copy:
+    src: files/setup.sh
+    dest: /tmp
+    mode: a+x
+
+- name: run .sh file to create zone and records into powerdns
+  shell: /tmp/setup.sh >> /tmp/outcomesetup.txt

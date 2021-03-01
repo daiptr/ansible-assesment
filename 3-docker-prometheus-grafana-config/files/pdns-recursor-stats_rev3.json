@@ -1,0 +1,1514 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMO",
+      "label": "Promo",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.0.3"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-piechart-panel",
+      "name": "Pie Chart",
+      "version": "1.5.0"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "PowerDNS Recursor built-in exporter stats",
+  "editable": true,
+  "gnetId": 12404,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1592816512679,
+  "links": [
+    {
+      "$$hashKey": "object:776",
+      "icon": "external link",
+      "tags": [
+        "dns"
+      ],
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "80%",
+      "format": "short",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "interval": null,
+      "legend": {
+        "show": true,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 1,
+      "nullPointMode": "connected",
+      "pieType": "donut",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "expr": "sum(increase(pdns_recursor_cache_hits{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$__range]))",
+          "interval": "",
+          "legendFormat": "hits",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(increase(pdns_recursor_cache_misses{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$__range]))",
+          "interval": "",
+          "legendFormat": "miss",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Cache hits/miss ratio",
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "description": "Number of outgoing UDP queries since starting",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 1,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(pdns_recursor_all_outqueries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "$recursor",
+          "metric": "pdns_recursor_all_outqueries",
+          "refId": "C",
+          "step": 2400
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "All outqueries $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "description": "counts all end-user initiated queries with the RD bit set",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum  (rate(pdns_recursor_questions{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]) + rate(pdns_recursor_ipv6_questions{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "$recursor",
+          "metric": "pdns_recursor_all_outqueries",
+          "refId": "C",
+          "step": 2400
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Questions $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "description": "Number of outgoing queries  via IPv6 since starting",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 11,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum  (rate(pdns_recursor_ipv6_outqueries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "$recursor",
+          "metric": "pdns_recursor_all_outqueries",
+          "refId": "C",
+          "step": 2400
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "All IPv6 outqueries $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 3,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_auth4_answers0_1{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "0-1 ms",
+          "refId": "A",
+          "step": 600
+        },
+        {
+          "expr": "sum  (rate(pdns_recursor_auth4_answers1_10{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "1-10 ms",
+          "refId": "E",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_auth4_answers10_100{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "10-100 ms",
+          "metric": "",
+          "refId": "B",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_auth4_answers100_1000{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "100-1000 ms",
+          "refId": "D",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_auth4_answers_slow{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "slow",
+          "metric": "",
+          "refId": "C",
+          "step": 600
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Answers auth4 $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_answers0_1{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "0-1 ms",
+          "refId": "A",
+          "step": 1200
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_answers1_10{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "1-10 ms",
+          "refId": "D",
+          "step": 1200
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_answers10_100{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "10-100 ms",
+          "metric": "",
+          "refId": "B",
+          "step": 1200
+        },
+        {
+          "expr": "sum  (rate(pdns_recursor_answers100_1000{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "100-1000 ms",
+          "refId": "E",
+          "step": 1200
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_answers_slow{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "slow",
+          "metric": "",
+          "refId": "C",
+          "step": 1200
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Answers $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_cache_hits{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "hits",
+          "refId": "D",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_cache_misses{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "misses",
+          "refId": "A",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_cache_entries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "entries",
+          "metric": "",
+          "refId": "C",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_negcache_entries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "negative",
+          "metric": "",
+          "refId": "B",
+          "step": 600
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Cache $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_auth6_answers0_1{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "0-1 ms",
+          "refId": "A",
+          "step": 600
+        },
+        {
+          "expr": "sum  (rate(pdns_recursor_auth6_answers1_10{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "1-10 ms",
+          "refId": "E",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_auth6_answers10_100{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "10-100 ms",
+          "metric": "",
+          "refId": "B",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_auth6_answers100_1000{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "100-1000 ms",
+          "refId": "D",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_auth6_answers_slow{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "slow",
+          "metric": "",
+          "refId": "C",
+          "step": 600
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Answers auth6 $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 29
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_cpu_msec_thread_0{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "CPU thread 0",
+          "refId": "D",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_cpu_msec_thread_1{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "CPU thread 1",
+          "refId": "A",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_cpu_msec_thread_2{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "CPU thread 2",
+          "refId": "B",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_sys_msec{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "System mode",
+          "refId": "C",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_user_msec{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "User mode",
+          "refId": "E",
+          "step": 600
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "CPU msec $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 29
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": true,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_servfail_answers{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "SERVFAIL",
+          "refId": "D",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_nxdomain_answers{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "NXDomain",
+          "refId": "C",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_failed_host_entries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Failed host",
+          "refId": "A",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_unauthorized_udp{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Unauthorized UDP",
+          "refId": "B",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_outgoing_timeouts{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Timeout",
+          "refId": "E",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_policy_result_noaction{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "No action",
+          "refId": "F",
+          "step": 600
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Failed events $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 36
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (rate(pdns_recursor_dnssec_queries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Querries",
+          "refId": "A",
+          "step": 600
+        },
+        {
+          "expr": "sum (rate(pdns_recursor_dnssec_check_disabled_queries{job=\"pdns-rec\",instance=~\"($recursor).+\"}[$T]))",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "Querries check disabled",
+          "refId": "B",
+          "step": 600
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "DNSSEC $recursor",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [
+    "powerdns",
+    "dns",
+    "resolver"
+  ],
+  "templating": {
+    "list": [
+      {
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "60s",
+        "current": {
+          "selected": false,
+          "text": "5m",
+          "value": "5m"
+        },
+        "hide": 0,
+        "label": "Interval",
+        "name": "T",
+        "options": [
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": true,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "1m,2m,5m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMO}",
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Hostname",
+        "multi": true,
+        "name": "recursor",
+        "options": [],
+        "query": "up{instance=~\".*\",job=\"pdns-rec\"}",
+        "refresh": 1,
+        "regex": "/.*instance=\"([[a-zA-Z0-9\\.]+]*).*/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now/w",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "PDNS recursor stats",
+  "uid": "000000044",
+  "version": 50
+}

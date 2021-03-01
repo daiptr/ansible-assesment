@@ -1,0 +1,87 @@
+- name: create grafana dashboard mapping directory
+  file:
+    path: "{{ grafana_dashboard_path }}"
+    state: directory
+    mode: '0777'
+
+#- name: create grafana datasource mapping directory
+#  file:
+#    path: /etc/grafana/provisioning/datasources
+#    state: directory
+#    mode: '0777'
+#
+#- name: move datasource config yaml to the target
+#  copy:
+#    src: files/datasource.yml
+#    dest: /etc/grafana/provisioning/datasources
+#    mode: '0777'
+
+- name: move dashboard provider node_exporter yml to the target
+  copy:
+    src: files/providers.yml
+    dest: "{{ grafana_dashboard_path }}"
+    mode: '0777'
+
+#- name: move dashboard provider POWER yml to the target
+#  copy:
+#    src: files/provider_powerdns.yml
+#    dest: /etc/grafana/provisioning/dashboards
+#    mode: '0777'
+
+- name: move dashboard node-exporter-full_rev22.json to the target
+  copy:
+    src: files/{{ node_exporter_json }}
+    dest: "{{ grafana_dashboard_path }}"
+    mode: '0777'
+
+- name: move dashboard pdns-recursor-stats_rev3.json to the target
+  copy:
+    src: files/{{ pdns_json }}
+    dest: "{{ grafana_dashboard_path }}"
+    mode: '0777'
+
+- name: run grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    published_ports:
+      - 3000:3000
+    volumes:
+      - "{{ grafana_dashboard_path }}:{{ grafana_dashboard_path }}"
+     #- /etc/grafana/provisioning/dashboards/powerdns-metrics_rev1.json:/etc/grafana/provisioning/dashboards/powerdns-metrics_rev1.json
+     #- /etc/grafana/provisioning/dashboards/providers.yml:/etc/grafana/provisioning/dashboards/providers.yml
+     #- /etc/grafana/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+
+- name: Wait for port 3000 to become open on the host, don't start checking for 5 seconds
+  wait_for:
+    port: 3000
+    delay: 5
+
+- name: create prometheus datasource
+  grafana_datasource:
+    name: prometheus
+    ds_type: prometheus
+    grafana_url: "http://{{ target_ip_address }}:{{ grafana_port }}"
+    ds_url: "http://{{ target_ip_address }}:{{ prometheus_port }}"
+    access: direct
+    tls_skip_verify: true
+    #basic_auth_user: admin
+    #basic_auth_password: admin
+
+#- name: Import Grafana dashboard prometheus_node_exporter
+#  grafana_dashboard:
+#    grafana_url: http://192.168.1.149:3000
+#    #state: present
+#    overwrite: yes
+#    #grafana_api_key: "{{ grafana_api_key }}"
+#    #folder: public
+#    path: https://grafana.com/api/dashboards/1860/revisions/22/download/node-exporter-full_rev22.json
+#
+#- name: Import Grafana dashboard powerdns
+#  grafana_dashboard:
+#    grafana_url: http://192.168.1.149:3000
+#    #state: present
+#    overwrite: yes
+#    #grafana_api_key: "{{ grafana_api_key }}"
+#    #folder: public
+#    path: https://grafana.com/api/dashboards/13228/revisions/1/download/npowerdns-metrics_rev1.json

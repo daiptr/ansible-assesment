@@ -1,2 +1,12 @@
 ---
 # handlers file for 3-docker-prometheus-grafana-config
+- name: restart docker
+  systemd:
+    name: docker
+    state: restarted
+
+- name: enable on boot
+  service:
+    name: docker
+    state: started
+    enabled: true

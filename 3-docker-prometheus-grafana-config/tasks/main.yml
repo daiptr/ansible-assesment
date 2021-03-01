@@ -1,2 +1,5 @@
 ---
 # tasks file for 3-docker-prometheus-grafana-config
+#- include: install_and_config_docker.yml
+- include: install_and_configure_prometheus_container.yml
+- include: install_grafana_container.yml

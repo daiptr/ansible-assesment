@@ -1,6 +1,6 @@
 - name: install EPEL repository to get pdns server
   yum:
-    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    name: "{{ epel_repo }}"
     state: latest
 
 - name: Install latest version of PowerDNS
@@ -10,11 +10,13 @@
 
 - name: expose API, setting DB path
   blockinfile:
-    path: /etc/pdns/pdns.conf
+    path: "{{ pdns_config_file }}"
     block: |
       api=yes
-      api-key=changeme
-      gsqlite3-database=/var/lib/powerdns/pdns.sqlite3
+      api-key={{ pdns_api_key }}
+      webserver=yes
+      webserver-port={{ pdns_webserver_port }}
+      gsqlite3-database={{ sqlite3_db_path }}
 
 - name: Install and configure sqlite as a backend
   yum:
@@ -23,13 +25,13 @@
 
 - name: setting the default backend as sqlite3
   ansible.builtin.lineinfile:
-      path: /etc/pdns/pdns.conf
+      path: "{{ pdns_config_file }}"
       regexp: '^launch='
-      line: 'launch=gsqlite3'
+      line: 'launch={{ pdns_backend }}'
 
 - name: cretaing DB path
   ansible.builtin.file:
-    dest: /var/lib/powerdns
+    dest: "{{ pdns_db_path }}"
     state: directory
     recurse: yes
     owner: pdns
@@ -37,16 +39,9 @@
     mode: '0755'
 
 - name: creating the database and restarting powerdns
-  #shell: sqlite3 /var/lib/powerdns/pdns.sqlite3 < /usr/share/doc/pdns/schema.sqlite3.sql
-  shell: ls #sita reikia istrinti ir atkomentinti virsutine eilute, nes kitaip gaunu exceptiona is sqlite3 runinant playbuka pakartotinai
+  shell: sqlite3 {{ sqlite3_db_path }} < /usr/share/doc/pdns/schema.sqlite3.sql
+  ignore_errors: yes
   notify: restart powerdns
 
-
-
-
-
-
-#- name: install Prometheus Node Exporter
-#  command:
 
 

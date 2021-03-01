@@ -1,4 +1,4 @@
 ---
 # tasks file for 1-create-powerdns-and-PNE-role
-- include: install_powerdns_and_sqlite_backend.yml
-- include: install_prometheus_node_exporter.yml
+#- include: install_powerdns_and_sqlite_backend.yml
+#- include: install_prometheus_node_exporter.yml

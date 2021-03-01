@@ -1,2 +1,4 @@
 ---
 # tasks file for 2-configure-powerdns-role
+
+- include: create_zone.yml
