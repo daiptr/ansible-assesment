@@ -1,2 +1,31 @@
 ---
 # vars file for 1-create-powerdns-and-PNE-role
+# 1. pdns and sqlite
+epel_repo: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+pdns_webserver_port: 8081
+pdns_config_file: /etc/pdns/pdns.conf
+pdns_db_path: /var/lib/powerdns
+sqlite3_db_path: /var/lib/powerdns/pdns.sqlite3
+pdns_backend: gsqlite3
+pdns_api_key: changeme
+
+node_exporter_version: 0.18.1
+node_exporter_working_path: /home/prometheus
+node_exporter_port: 9100
+
+# 2. zone creation
+zone_name: ruptela.org
+
+# 3. docker, prometheus and grafana
+
+target_ip_address: "{{ hostvars['ansiblehost']['ansible_default_ipv4']['address'] }}"
+grafana_dashboard_path: /etc/grafana/provisioning/dashboards
+docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
+prometheus_workig_path: /etc/prometheus
+prometheus_image: prom/prometheus
+prometheus_published_port: 9090:9090
+node_exporter_json: node-exporter-full_rev22.json
+pdns_json: pdns-recursor-stats_rev3.json
+ip_address: 192.168.1.149
+grafana_port: 3000
+prometheus_port: 9090

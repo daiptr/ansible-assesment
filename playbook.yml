@@ -1,5 +1,7 @@
 - hosts: ansiblehost
   become: yes
+  vars_files:
+    - group_vars/all/common_vars.yml
   roles:
     - 1-create-powerdns-and-PNE-role
     - 2-configure-powerdns-role

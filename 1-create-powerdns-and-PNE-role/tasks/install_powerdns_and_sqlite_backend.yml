@@ -20,7 +20,9 @@
 
 - name: Install and configure sqlite as a backend
   yum:
-    name: pdns-backend-sqlite
+    name:
+     - pdns-backend-sqlite
+     - sqlite
     state: latest
 
 - name: setting the default backend as sqlite3

@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include 2-configure-powerdns-role"
+      include_role:
+        name: "2-configure-powerdns-role"

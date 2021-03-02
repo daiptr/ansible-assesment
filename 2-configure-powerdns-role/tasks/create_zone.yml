@@ -3,6 +3,8 @@
     src: files/setup.sh
     dest: /tmp
     mode: a+x
+    owner: root
+    group: root
 
 - name: run .sh file to create zone and records into powerdns
-  shell: /tmp/setup.sh >> /tmp/outcomesetup.txt
+  command: /tmp/setup.sh >> /tmp/outcomesetup.txt
