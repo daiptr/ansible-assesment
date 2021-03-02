@@ -18,7 +18,7 @@ zone_name: ruptela.org
 
 # 3. docker, prometheus and grafana
 
-target_ip_address: "{{ hostvars['ansiblehost']['ansible_default_ipv4']['address'] }}"
+target_ip_address: localhost #"{{ hostvars['ansiblehost']['ansible_default_ipv4']['address'] }}" Nezinau, kaip pasiimti ipv4 adresa kaip variabla per molecule :/
 grafana_dashboard_path: /etc/grafana/provisioning/dashboards
 docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
 prometheus_workig_path: /etc/prometheus
