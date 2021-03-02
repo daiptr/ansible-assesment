@@ -2,9 +2,9 @@
   copy:
     src: files/setup.sh
     dest: /tmp
-    mode: a+x
-    owner: root
-    group: root
+    mode: '0755'
 
 - name: run .sh file to create zone and records into powerdns
-  command: /tmp/setup.sh >> /tmp/outcomesetup.txt
+  command:
+    - chmod +x /tmp/setup.sh
+    - /tmp/setup.sh
