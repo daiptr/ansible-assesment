@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include 3-docker-prometheus-grafana-config"
+      include_role:
+        name: "3-docker-prometheus-grafana-config"

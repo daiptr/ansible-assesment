@@ -1,6 +1,12 @@
+- name: update yum
+  command: yum update -y
+
 - name: install yum-utils
   yum:
-    name: yum-utils
+    name:
+     - yum-utils
+     - device-mapper-persistent-data
+     - lvm2
     state: latest
 
 - name: install docker repo
@@ -14,10 +20,18 @@
 
 - name: install docker
   yum:
-    name: docker-ce
+    name:
+     - docker-ce
+     - docker-ce-cli
+     - containerd.io
     state: latest
+
   notify:
     - restart docker
     - enable on boot
 
+- name: restart docker
+  systemd:
+    name: docker
+    state: restarted
 
